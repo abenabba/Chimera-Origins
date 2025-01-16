@@ -55,7 +55,7 @@ Align the parental library sequences against the shuffled database:
 ```
 conda run -n find_chimera blastn -query All_parents_codon_labeled_nobrac.fasta -db caa.db -evalue 1e-6 -outfmt 6 -out BC2_alignment_results2.tsv
 
-#output format 6 will list the e-value in column 11 and the bit score in column 12.
+#output format 6 will list the e-value in column 11 and the bit score in column 12. BC2_alignment_results2.tsv shows how the output for caa.fasta should look like.
 ```
 
 4. Changing the Alignment Direction
@@ -63,7 +63,7 @@ To align the entire parental library (All_parents_codon_labeled_nobrac.fasta) wi
 ```
 # Align the parental library against the shuffled library
 conda run -n find_chimera blastn -query All_parents_codon_labeled_nobrac.fasta -db BC2_after_consesnus_R.db -evalue 1e-6 -outfmt 6 -out Parental_vs_Shuffled_alignment.tsv
-This ensures that each sequence from the parental library is aligned to all sequences in the shuffled library.
+#This ensures that each sequence from the parental library is aligned to all sequences in the shuffled library.
 ```
 5. Output Details
 ```
