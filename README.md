@@ -9,7 +9,8 @@ After long-read sequencing of the libraries, I aligned the shuffled sequences wi
 
 After determining which parents align to which sections of the chimera, I used (alphafold)[https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb#scrollTo=kOblAo-xetgx] to predict its structure. I then uploded the structures on to Pymol and colored the different parental sections of the chimera.
 In this repository, I've included the fasta files for one of the variants mentioned in the doc. I've also included the Fasta file of the library sequencing for both the parents and shuffled library. Below is the annotated pymol image I made of this variant:
-![final structures for figure2](https://github.com/user-attachments/assets/f75c4097-894c-4703-9fdc-50638111f284)
+<img width="565" alt="Screenshot 2025-01-16 at 2 30 49 PM" src="https://github.com/user-attachments/assets/b7cc1fab-2563-4c2b-9e09-42744fce34d0" />
+
 
 
 # Reproducing the Analysis
