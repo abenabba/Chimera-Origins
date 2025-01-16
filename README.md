@@ -14,7 +14,7 @@ In this repository, I've included the fasta files for one of the variants mentio
 
 
 # Reproducing the Analysis
-1. Set Up the Environment
+1. Set Up the Environment (in Jupyter notebook)
 Initialize Conda and activate the find_chimera environment:
 
 ```
@@ -34,28 +34,32 @@ Create BLAST databases for the parental library and shuffled library sequences:
 ```
 # Create a BLAST database for the parental library
 
+conda run -n find_chimera makeblastdb -in All_parents_codon_labeled_nobrac.fasta -dbtype nucl -out All_parents_codon_labeled_nobrac.db
+
+# Create a BLAST database from the shuffled variant
+
 conda run -n find_chimera makeblastdb -in caa.fasta -dbtype nucl -out caa.db
 
-# Create a BLAST database for the shuffled sequences
-
-conda run -n find_chimera makeblastdb -in BC2_after_consesnus_R.fasta -dbtype nucl -out BC2_after_consesnus_R.db
+#normally, I'd use the file with all the shuffled sequences instea dof just oen variant, but it's too large to upload on Github. 
 ```
 
 3. Perform the BLAST Alignments
 Align a shuffled sequence against the parental library database:
 
 ```
-conda run -n find_chimera blastn -query BC2_after_consesnus_R.fasta -db caa.db -evalue 1e-6 -outfmt 6 -out BC2_alignment_results.tsv
+conda run -n find_chimera blastn -query All_parents_codon_labeled_nobrac.fasta -db caa.db -evalue 1e-6 -outfmt 6 -out All_parents_codon_labeled_nobrac_results.tsv
 ```
 
 Align the parental library sequences against the shuffled database:
 
 ```
 conda run -n find_chimera blastn -query All_parents_codon_labeled_nobrac.fasta -db caa.db -evalue 1e-6 -outfmt 6 -out BC2_alignment_results2.tsv
+
+#output format 6 will list the e-value in column 11 and the bit score in column 12.
 ```
 
 4. Changing the Alignment Direction
-To align the entire parental library (caa.fasta) with the shuffled library (BC2_after_consesnus_R.fasta), you can swap the roles of the query and database files. Here’s the adjusted command:
+To align the entire parental library (All_parents_codon_labeled_nobrac.fasta) with the shuffled library (BC2_after_consesnus_R.fasta), you can swap the roles of the query and database files. Here’s the adjusted command:
 ```
 # Align the parental library against the shuffled library
 conda run -n find_chimera blastn -query caa.fasta -db BC2_after_consesnus_R.db -evalue 1e-6 -outfmt 6 -out Parental_vs_Shuffled_alignment.tsv
