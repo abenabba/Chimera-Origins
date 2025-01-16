@@ -59,10 +59,10 @@ conda run -n find_chimera blastn -query All_parents_codon_labeled_nobrac.fasta -
 ```
 
 4. Changing the Alignment Direction
-To align the entire parental library (All_parents_codon_labeled_nobrac.fasta) with the shuffled library (BC2_after_consesnus_R.fasta), you can swap the roles of the query and database files. Here’s the adjusted command:
+To align the entire parental library (All_parents_codon_labeled_nobrac.fasta) with the shuffled library (BC2_after_consesnus_R.fasta, not included in repo), you can swap the roles of the query and database files. Here’s the adjusted command:
 ```
 # Align the parental library against the shuffled library
-conda run -n find_chimera blastn -query caa.fasta -db BC2_after_consesnus_R.db -evalue 1e-6 -outfmt 6 -out Parental_vs_Shuffled_alignment.tsv
+conda run -n find_chimera blastn -query All_parents_codon_labeled_nobrac.fasta -db BC2_after_consesnus_R.db -evalue 1e-6 -outfmt 6 -out Parental_vs_Shuffled_alignment.tsv
 This ensures that each sequence from the parental library is aligned to all sequences in the shuffled library.
 ```
 5. Output Details
