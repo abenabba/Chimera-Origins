@@ -11,3 +11,56 @@ After determining which parents align to which sections of the chimera, I used (
 In this repository, I've included the fasta files for one of the variants mentioned in the doc. I've also included the Fasta file of the library sequencing for both the parents and shuffled library. Below is the annotated pymol image I made of this variant:
 ![final structures for figure2](https://github.com/user-attachments/assets/f75c4097-894c-4703-9fdc-50638111f284)
 
+
+# Reproducing the Analysis
+1. Set Up the Environment
+Initialize Conda and activate the find_chimera environment:
+
+```
+conda init
+conda activate find_chimera
+```
+
+Install BLAST:
+
+```
+conda install -n find_chimera -c bioconda blast -y
+```
+
+2. Prepare the BLAST Databases
+Create BLAST databases for the parental library and shuffled library sequences:
+
+```
+# Create a BLAST database for the parental library
+
+conda run -n find_chimera makeblastdb -in caa.fasta -dbtype nucl -out caa.db
+
+# Create a BLAST database for the shuffled sequences
+
+conda run -n find_chimera makeblastdb -in BC2_after_consesnus_R.fasta -dbtype nucl -out BC2_after_consesnus_R.db
+```
+
+3. Perform the BLAST Alignments
+Align a shuffled sequence against the parental library database:
+
+```
+conda run -n find_chimera blastn -query BC2_after_consesnus_R.fasta -db caa.db -evalue 1e-6 -outfmt 6 -out BC2_alignment_results.tsv
+```
+
+Align the parental library sequences against the shuffled database:
+
+```
+conda run -n find_chimera blastn -query All_parents_codon_labeled_nobrac.fasta -db caa.db -evalue 1e-6 -outfmt 6 -out BC2_alignment_results2.tsv
+```
+
+4. Changing the Alignment Direction
+To align the entire parental library (caa.fasta) with the shuffled library (BC2_after_consesnus_R.fasta), you can swap the roles of the query and database files. Here’s the adjusted command:
+```
+# Align the parental library against the shuffled library
+conda run -n find_chimera blastn -query caa.fasta -db BC2_after_consesnus_R.db -evalue 1e-6 -outfmt 6 -out Parental_vs_Shuffled_alignment.tsv
+This ensures that each sequence from the parental library is aligned to all sequences in the shuffled library.
+```
+5. Output Details
+```
+The -outfmt 6 flag specifies the tabular format of the alignment output, including details like bit scores, E-values, and alignment length
+```
