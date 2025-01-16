@@ -1,10 +1,10 @@
 1. Set Up the Environment
 Initialize Conda and activate the find_chimera environment:
 
-
+'''
 conda init
 conda activate find_chimera
-
+'''
 
 Install BLAST:
 
